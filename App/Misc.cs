@@ -18,7 +18,7 @@ public class Misc
 
     public static async Task CleanUpOnCancellation(FileInfo file, FileStream fileStream)
     {
-        // Этот блок выполнится при отмене Parallel.ForEachAsync
+        // Этот блок выполнится при отмене в Parallel.ForEachAsync
         Console.WriteLine("[-] Операция отменена");
         
         try

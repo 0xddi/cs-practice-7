@@ -14,7 +14,7 @@ public static class Input
     {
         string[] result = [];
         var valid = false;
-        while (!valid)
+        while (valid is false)
         {
             Console.Write("Введите нужные URL через пробел: ");
             result = Console.ReadLine()!.Split(' ');
@@ -74,7 +74,7 @@ public static class Input
                 {
                     Console.WriteLine("[?] Файл уже существует. Хотите ли вы его перезаписать? [y/n]");
                     Console.Write(">>");
-                    var answer = Console.ReadLine()!.ToLower();
+                    var answer = Console.ReadLine()!.Trim().ToLower();
                     if (answer == "y")
                     {
                         Console.WriteLine("[+] Вы согласились на перезапись файла.");

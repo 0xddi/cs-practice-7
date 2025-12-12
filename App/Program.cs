@@ -1,10 +1,10 @@
 ﻿using App;
 
 var cts = new CancellationTokenSource();
-Console.CancelKeyPress += (_, args) =>  
+Console.CancelKeyPress += (_, arg) =>  
 {
     Console.WriteLine("\n[~] Отмена операции...");
-    args.Cancel = true;
+    arg.Cancel = true;
     cts.Cancel();
 };
 
@@ -14,7 +14,7 @@ var destStream = destFile.OpenWrite(); // Поток для записи
 bool fileStreamIsClosed = false;
 
 using var http = new HttpClient(); // Переместили выше, т.к. не нужно создавать HttpClient для каждого потока
-// Используем семафор для потобезопасности
+// Используем семафор для потокобезопасности
 var semaphore = new SemaphoreSlim(1, 1);
 
 try
@@ -64,7 +64,7 @@ catch (OperationCanceledException)
 finally
 {
     // закрываем FileStream асинхронно
-    if (!fileStreamIsClosed)
+    if (fileStreamIsClosed is false)
     {
         await destStream.DisposeAsync();
     }
