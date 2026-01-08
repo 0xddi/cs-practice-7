@@ -2,13 +2,13 @@
 
 public class Misc
 {
-    public static int CountLines(FileInfo filePath)
+    public static async Task<int> CountLinesAsync(FileInfo filePath)
     {
         int countLines = 0;
 
         using (StreamReader reader = new StreamReader(filePath.FullName))
         {
-            while (reader.ReadLine() != null)
+            while (await reader.ReadLineAsync() != null)
             {
                 countLines++;
             }

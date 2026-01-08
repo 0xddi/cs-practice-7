@@ -66,7 +66,8 @@ finally
 }
 
 Console.WriteLine($"[+] Загрузка завершена. Файл сохранен: {destFile.FullName}");
-Console.WriteLine("Количество строк в полученном файле:" + Misc.CountLines(destFile));
+int lineCount = await Misc.CountLinesAsync(destFile);
+Console.WriteLine($"Количество строк в полученном файле: {lineCount}");
 
 
 
