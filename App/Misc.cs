@@ -25,23 +25,16 @@ public class Misc
         {
             // Закрываем поток перед удалением
             await fileStream.DisposeAsync();
-                
-                
-            // Несколько попыток удаления
-            for (int i = 0; i < 3; i++)
+            
+            try
             {
-                try
-                {
-                    file.Delete();
-                    Console.WriteLine($"[+] Файл {file.FullName} удален");
-                    return; // Выходим из метода, а потом из программы
-                }
-                catch (IOException) when (i < 2) // Если файл еще используется
-                { 
-                    await Task.Delay(300);
-                }
+                file.Delete();
+                Console.WriteLine($"[+] Файл {file.FullName} удален");
             }
-            Console.WriteLine($"[-] Не удалось удалить файл {file.FullName}, удалите его вручную");
+            catch (IOException) // Если файл еще используется
+            { 
+                Console.WriteLine($"[-] Не удалось удалить файл {file.FullName}, удалите его вручную");
+            }
         }
         catch (Exception ex)
         {

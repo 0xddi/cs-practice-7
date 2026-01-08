@@ -11,7 +11,6 @@ Console.CancelKeyPress += (_, arg) =>
 var uris = Input.GetUris();
 var destFile = Input.GetOutputFile();
 var destStream = destFile.OpenWrite(); // Поток для записи
-bool fileStreamIsClosed = false;
 
 using var http = new HttpClient(); // Переместили выше, т.к. не нужно создавать HttpClient для каждого потока
 // Используем семафор для потокобезопасности
@@ -56,7 +55,6 @@ try
 }
 catch (OperationCanceledException)
 {
-    fileStreamIsClosed = true;
     await Misc.CleanUpOnCancellation(destFile,  destStream);
     Console.WriteLine("[!] Программа экстренно завершает свою работу.");
     return; // Выходим из программы
@@ -64,10 +62,7 @@ catch (OperationCanceledException)
 finally
 {
     // закрываем FileStream асинхронно
-    if (fileStreamIsClosed is false)
-    {
-        await destStream.DisposeAsync();
-    }
+    await destStream.DisposeAsync();
 }
 
 Console.WriteLine($"[+] Загрузка завершена. Файл сохранен: {destFile.FullName}");
