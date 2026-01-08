@@ -9,7 +9,7 @@ Console.CancelKeyPress += (_, arg) =>
 };
 
 var uris = Input.GetUris();
-var destFile = Input.GetPathToOutputFile();
+var destFile = Input.GetOutputFile();
 var destStream = destFile.OpenWrite(); // Поток для записи
 bool fileStreamIsClosed = false;
 

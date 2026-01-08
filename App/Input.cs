@@ -28,7 +28,7 @@ public static class Input
         return result;
     }
 
-    private static bool IsValidUri(string uri) => Uri.TryCreate(uri, UriKind.Absolute, out _) && uri.StartsWith("https://");
+    private static bool IsValidUri(string uri) => Uri.TryCreate(uri, UriKind.Absolute, out _);
 
     private static bool IsValidPath(string path)
     {
@@ -61,7 +61,7 @@ public static class Input
     /// <summary>
     /// Считывает от пользователя путь до файла с результатом.
     /// </summary>
-    public static FileInfo GetPathToOutputFile()
+    public static FileInfo GetOutputFile()
     {
         FileInfo file;
         while (true)
@@ -74,8 +74,7 @@ public static class Input
                 {
                     Console.WriteLine("[?] Файл уже существует. Хотите ли вы его перезаписать? [y/n]");
                     Console.Write(">>");
-                    var answer = Console.ReadLine()!.Trim().ToLower();
-                    if (answer == "y")
+                    if (Console.ReadKey(true).Key == ConsoleKey.Y)
                     {
                         Console.WriteLine("[+] Вы согласились на перезапись файла.");
                         File.Delete(file.FullName);
